@@ -5,8 +5,8 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
-@Entity('sponsorship_inquiries')
-export class SponsorshipInquiry {
+@Entity('speaker_inquiries')
+export class SpeakerInquiry {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,9 +24,6 @@ export class SponsorshipInquiry {
 
   @Column({ length: 20 })
   contactNumber: string;
-
-  @Column({ length: 50 })
-  interest: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

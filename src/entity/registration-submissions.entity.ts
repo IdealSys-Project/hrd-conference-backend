@@ -1,12 +1,12 @@
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
+  Column,
   CreateDateColumn,
 } from 'typeorm';
 
-@Entity('sponsorship_inquiries')
-export class SponsorshipInquiry {
+@Entity('registration_submissions')
+export class RegistrationSubmission {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,8 +25,8 @@ export class SponsorshipInquiry {
   @Column({ length: 20 })
   contactNumber: string;
 
-  @Column({ length: 50 })
-  interest: string;
+  @Column({ length: 50, nullable: true })
+  promoCode?: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;

@@ -19,11 +19,11 @@ export class SponsorshipInquiryService {
       return {
         status: true,
         message:
-          'Your speaker application has been successfully submitted and stored in our database.',
+          'Your sponsorship inquiry has been successfully submitted and stored in our database.',
       };
     } catch (error) {
       throw new InternalServerErrorException(
-        `There was a problem storing your application: ${error.message}`,
+        `There was a problem storing your inquiry: ${error.message}`,
       );
     }
   }
