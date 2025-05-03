@@ -10,9 +10,11 @@ import { RegistrationSubmissionModule } from './modules/registration-submissions
 import { SnakecaseNamingStrategy } from './config/snakecase-naming-strategy';
 import { SpeakerInquiry } from './entity/speaker-inquiry';
 import { SpeakerInquiryModule } from './modules/speaker-inquiry/speaker-inquiry.module';
+import { TerminusModule } from '@nestjs/terminus';
 
 @Module({
   imports: [
+    TerminusModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -27,6 +29,7 @@ import { SpeakerInquiryModule } from './modules/speaker-inquiry/speaker-inquiry.
       synchronize: false,
       retryAttempts: 3,
       namingStrategy: new SnakecaseNamingStrategy(),
+      logging: ['error'],
     }),
     SponsorshipInquiryModule,
     RegistrationSubmissionModule,
