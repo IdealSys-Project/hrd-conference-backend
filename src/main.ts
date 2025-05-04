@@ -20,6 +20,16 @@ async function bootstrap() {
     .setTitle('API Documentation')
     .setDescription('This is the API documentation for the projects')
     .setVersion('1.0')
+    .addBasicAuth(
+      {
+        type: 'http',
+        scheme: 'basic',
+        description: 'Enter credentials to authenticate',
+        in: 'header',
+      },
+      'basic-auth',
+    )
+
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -27,6 +37,7 @@ async function bootstrap() {
     customCssUrl: '/swagger-custom.css',
     swaggerOptions: {
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
+      persistAuthorization: true,
     },
   });
 

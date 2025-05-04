@@ -139,3 +139,68 @@ body,
 .swagger-ui .opblock.opblock-get .opblock-summary {
   border-color: none !important;
 }
+
+/* Modal Styling */
+.swagger-ui .dialog-ux .modal-ux {
+  background: #1e1e1e !important;
+  color: #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2e2e2e;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  backdrop-filter: blur(6px);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Text Elements */
+.swagger-ui .dialog-ux .modal-ux h3,
+.swagger-ui .dialog-ux .modal-ux p,
+.swagger-ui .dialog-ux .modal-ux label {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Buttons (including Logout) */
+.swagger-ui .dialog-ux .modal-ux .btn,
+.swagger-ui .topbar .logout-button {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.swagger-ui .dialog-ux .modal-ux .btn:hover {
+  background-color: #525252;
+}
+
+.swagger-ui .auth-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.swagger-ui .modal-ux .btn.modal-btn.auth {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.swagger-ui .modal-ux .btn.modal-btn.auth:hover {
+  background-color: #285e61;
+  cursor: pointer;
+}
+
+.swagger-ui .scheme-container {
+  background: #1e1e1e;
+}
