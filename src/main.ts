@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ForbiddenException, ValidationPipe } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as express from 'express';
@@ -10,11 +10,29 @@ dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+
   app.use(
     '/swagger-custom.css',
     express.static(path.join(process.cwd(), 'src/config/swagger-custom.css')),
   );
+
+  // Configure CORS dynamically based on environment variable
+  const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
+
+  app.enableCors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(
+          new ForbiddenException('Access denied: Your origin is not allowed.'),
+        );
+      }
+    },
+    credentials: true,
+  });
 
   const config = new DocumentBuilder()
     .setTitle('API Documentation')
@@ -29,7 +47,6 @@ async function bootstrap() {
       },
       'basic-auth',
     )
-
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -43,4 +60,5 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
+
 bootstrap();
