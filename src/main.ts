@@ -9,7 +9,7 @@ import * as path from 'path';
 dotenv.config();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { logger: ['error'] });
+  const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.use(
     '/swagger-custom.css',

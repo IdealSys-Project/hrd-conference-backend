@@ -10,37 +10,38 @@ import {
 
 @ApiTags('Registration Submission')
 export class CreateRegistrationSubmissionDto {
-  @ApiProperty({ description: 'Full name of the applicant' })
+  @ApiProperty({ description: 'Full Name' })
   @IsString()
-  @IsNotEmpty()
-  @Length(3, 100)
-  full_name: string;
+  @IsNotEmpty({ message: 'Full Name is required' })
+  @Length(3, 100, { message: 'Full Name must be between 3 and 100 characters' })
+  fullName: string;
 
-  @ApiProperty({ description: 'Email address' })
-  @IsEmail()
-  @IsNotEmpty()
+  @ApiProperty({ description: 'Email Address' })
+  @IsEmail({}, { message: 'Invalid Email Address format' })
+  @IsNotEmpty({ message: 'Email Address is required' })
   email: string;
 
-  @ApiProperty({ description: 'Company name' })
+  @ApiProperty({ description: 'Company Name' })
   @IsString()
-  @IsNotEmpty()
-  @Length(3, 100)
+  @IsNotEmpty({ message: 'Company Name is required' })
+  @Length(3, 100, {
+    message: 'Company Name must be between 3 and 100 characters',
+  })
   company: string;
 
-  @ApiProperty({ description: 'Job title' })
+  @ApiProperty({ description: 'Job Title' })
   @IsString()
-  @IsNotEmpty()
-  @Length(2, 100)
-  job_title: string;
+  @IsNotEmpty({ message: 'Job Title is required' })
+  @Length(2, 100, { message: 'Job Title must be between 2 and 100 characters' })
+  jobTitle: string;
 
-  @ApiProperty({ description: 'Contact number (Malaysia format)' })
-  @IsPhoneNumber('MY')
-  @IsNotEmpty()
-  contact_number: string;
+  @ApiProperty({ description: 'Contact Number' })
+  @IsPhoneNumber('MY', { message: 'Invalid Contact Number format' })
+  @IsNotEmpty({ message: 'Contact Number is required' })
+  contactNumber: string;
 
-  @ApiPropertyOptional({ description: 'Optional promo code' })
+  @ApiPropertyOptional({ description: 'Promo Code (Optional)' })
   @IsOptional()
   @IsString()
-  @Length(3, 50)
-  promo_code?: string;
+  promoCode?: string;
 }
