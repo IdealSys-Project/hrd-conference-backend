@@ -43,10 +43,4 @@ export class CreateSponsorshipInquiryDto {
   @IsNotEmpty()
   @Length(3, 50)
   interest: string;
-
-  @ApiPropertyOptional({ description: 'Optional promo code' })
-  @IsOptional()
-  @IsString()
-  @Length(3, 20)
-  promoCode?: string;
 }
