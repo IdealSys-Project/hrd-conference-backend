@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { SponsorshipInquiry } from 'src/entity/sponsorship-inquiry.entity';
 import { Repository } from 'typeorm';
 import { CreateSponsorshipInquiryDto } from './sponsorship-inquiry.dto';
+import sendEmail from 'src/helper/send-email';
 
 @Injectable()
 export class SponsorshipInquiryService {
@@ -16,6 +17,12 @@ export class SponsorshipInquiryService {
   ): Promise<{ status: boolean; message: string }> {
     try {
       await this.sponsorshipInquiry.save(data);
+      await sendEmail({
+        to: 'hashimisharudin.work@gmail.com',
+        subject: 'TEST',
+        template: 'sponsorship-email',
+        templateData: data,
+      });
       return {
         status: true,
         message:
