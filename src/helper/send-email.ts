@@ -13,6 +13,7 @@ interface EmailOptions {
   template?: string;
   templateData?: Record<string, any>;
   attachments?: Array<{ filename: string; path: string }>;
+  bcc?: string[];
 }
 
 const compileTemplate = (
@@ -37,6 +38,7 @@ const sendEmail = async ({
   template,
   templateData,
   attachments,
+  bcc,
 }: EmailOptions): Promise<void> => {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -46,6 +48,7 @@ const sendEmail = async ({
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
+    bcc,
   });
 
   const mailOptions = {
