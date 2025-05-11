@@ -37,11 +37,8 @@ export class SponsorshipInquiryService {
 
       await this.sponsorshipInquiryRepo.save(data);
 
-      const recipientEmail =
-        this.configService.get<string>('EMAIL_RECIPIENT') || 'default';
-
       await sendEmail({
-        to: recipientEmail,
+        to: ['test'],
         subject: 'Sponsorship Inquiry Submission',
         template: 'sponsorship-email',
         templateData: data,

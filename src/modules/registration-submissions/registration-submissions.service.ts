@@ -41,12 +41,8 @@ export class RegistrationSubmissionService {
       const newSubmission = await this.submissionRepo.save(data);
       this.logger.log(`Submission created successfully`);
 
-      const recipientEmail =
-        this.configService.get<string>('EMAIL_RECIPIENT') || 'default';
-
-      this.logger.log(`Sending email to: ${recipientEmail}`);
       await sendEmail({
-        to: recipientEmail,
+        to: ['test'],
         subject: `New Registration Submission: ${data.fullName}`,
         template: 'registration-submissions',
         templateData: data,

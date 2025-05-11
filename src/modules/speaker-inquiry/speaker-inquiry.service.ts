@@ -37,10 +37,9 @@ export class SpeakerInquiryService {
       }
 
       await this.speakerInquiryRepo.save(data);
-      const recipientEmail =
-        this.configService.get<string>('EMAIL_RECIPIENT') || 'default';
+      ('default');
       await sendEmail({
-        to: recipientEmail,
+        to: ['test'],
         subject: 'Speaker Inquiry Submission',
         template: 'speaker-email',
         templateData: data,
