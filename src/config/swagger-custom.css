@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+body,
+.swagger-ui * {
+  font-family: 'Poppins', sans-serif !important;
+  color: #b0b0b0 !important;
+}
+
+.swagger-ui {
+  background-color: #1e1e1e;
+  padding: 10px;
+}
+
+.swagger-ui .topbar {
+  display: none !important;
+}
+
+.swagger-ui .info {
+  margin: 10px 0;
+}
+
+.swagger-ui .info .title small pre {
+  color: #fff !important;
+}
+
+.swagger-ui .opblock-summary,
+.swagger-ui .scheme-container,
+.swagger-ui .parameter__name,
+.swagger-ui .parameter__type,
+.swagger-ui .info .title,
+.swagger-ui .info h1,
+.swagger-ui .info h2,
+.swagger-ui .info h3,
+.swagger-ui .info h4,
+.swagger-ui .info h5,
+.swagger-ui .info li,
+.swagger-ui .info p,
+.swagger-ui .info table {
+  color: #cfcfcf !important;
+}
+
+.swagger-ui .opblock {
+  background: #2a2a2a;
+  padding: 18px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(176, 176, 176, 0.1);
+}
+
+.swagger-ui .parameters-col_description {
+  font-size: 16px;
+  color: #a0a0a0 !important;
+  font-weight: 500;
+}
+
+.swagger-ui input,
+.swagger-ui textarea,
+.swagger-ui select {
+  padding: 12px;
+  border-radius: 6px;
+  background: #333;
+  border: 1px solid #555;
+  color: #cfcfcf !important;
+}
+
+.swagger-ui .responses-inner {
+  margin-top: 5px;
+  background-color: #282828;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: inset 0px 2px 8px rgba(176, 176, 176, 0.08);
+}
+
+.swagger-ui .response-col_status {
+  font-size: 18px;
+  font-weight: bold;
+  color: #4caf50 !important;
+}
+
+.swagger-ui .highlight-code {
+  font-size: 14px;
+  background: #333;
+  padding: 16px;
+  border-radius: 6px;
+  color: #66ff99 !important;
+}
+
+.swagger-ui .opblock.opblock-post .opblock-summary-method,
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+  color: #fff !important;
+}
+
+/* Custom "Try it out" Button Styling */
+.swagger-ui .btn.try-out__btn {
+  background: #4caf50 !important; /* Green for action clarity */
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 10px 15px;
+  transition: background 0.3s ease-in-out;
+}
+
+.swagger-ui .btn.out__btn-out:hover {
+  background: #388e3c !important; /* Darker shade on hover */
+}
+
+.swagger-ui .btn.out__btn-out:disabled {
+  background: #555 !important;
+  color: #bbb !important;
+  cursor: not-allowed;
+}
+
+.swagger-ui a.nostyle,
+.swagger-ui a.nostyle:visited {
+  color: #b0b0b0 !important;
+}
+
+.swagger-ui .opblock .opblock-summary-description {
+  color: #b0b0b0 !important;
+}
+
+.swagger-ui .dialog-ux {
+  font-family: 'Poppins', sans-serif !important;
+  color: #b0b0b0 !important;
+}
+
+.swagger-ui .opblock .opblock-section-header {
+  background: #2a2a2a !important;
+  color: #cfcfcf !important;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.swagger-ui .btn.execute {
+  color: #fff !important;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary {
+  border-color: none !important;
+}
+
+/* Modal Styling */
+.swagger-ui .dialog-ux .modal-ux {
+  background: #1e1e1e !important;
+  color: #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2e2e2e;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  backdrop-filter: blur(6px);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Text Elements */
+.swagger-ui .dialog-ux .modal-ux h3,
+.swagger-ui .dialog-ux .modal-ux p,
+.swagger-ui .dialog-ux .modal-ux label {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Buttons (including Logout) */
+.swagger-ui .dialog-ux .modal-ux .btn,
+.swagger-ui .topbar .logout-button {
+  background-color: #3a3a3a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.swagger-ui .dialog-ux .modal-ux .btn:hover {
+  background-color: #525252;
+}
+
+.swagger-ui .auth-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.swagger-ui .modal-ux .btn.modal-btn.auth {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.swagger-ui .modal-ux .btn.modal-btn.auth:hover {
+  background-color: #285e61;
+  cursor: pointer;
+}
+
+.swagger-ui .scheme-container {
+  background: #1e1e1e;
+}
+
+.swagger-ui .model-box {
+  background-color: #2a2a2a !important;
+  padding: 16px;
+  border-radius: 6px;
+  color: #cfcfcf !important;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.swagger-ui .model-title {
+  color: #fff !important;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.swagger-ui .model-box {
+  background-color: #2a2a2a !important;
+  padding: 16px;
+  border-radius: 8px;
+  color: #cfcfcf !important;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.swagger-ui .model .prop-name {
+  font-weight: bold !important;
+  color: #66ff99 !important;
+  font-size: 15px;
+}
+
+.swagger-ui .model .prop-type {
+  font-style: italic;
+  color: #ffa726 !important;
+}
