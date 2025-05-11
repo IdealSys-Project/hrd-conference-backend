@@ -1,6 +1,33 @@
 version: '3.8'
 
 services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - /etc/nginx/certs:/etc/nginx/certs
+      - /etc/nginx/vhost.d:/etc/nginx/vhost.d
+      - /usr/share/nginx/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-letsencrypt
+    restart: always
+    depends_on:
+      - nginx-proxy
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - /etc/nginx/certs:/etc/nginx/certs
+      - /etc/nginx/vhost.d:/etc/nginx/vhost.d
+      - /usr/share/nginx/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
   mysql:
     container_name: mysql
     image: mysql:8
@@ -25,11 +52,15 @@ services:
     build: .
     env_file:
       - .env
-    ports:
-      - '${PORT}:${PORT}'
+    restart: always
     depends_on:
       - mysql
-    restart: always
+    expose:
+      - '${PORT}'
+    environment:
+      - VIRTUAL_HOST=srv819239.hstgr.cloud
+      - LETSENCRYPT_HOST=srv819239.hstgr.cloud
+      - LETSENCRYPT_EMAIL=helmizaki1997@gmail.com
     command: npm run start:prod
 
 volumes:
