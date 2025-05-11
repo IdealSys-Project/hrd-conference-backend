@@ -52,7 +52,10 @@ export class RegistrationSubmissionService {
         templateData: data,
       });
 
-      return generateResponse(true, 'Registered successfully!', newSubmission);
+      return generateResponse(
+        true,
+        'Registered successfully! We’ll get back to you soon.',
+      );
     } catch (error) {
       this.logger.error(`Error creating submission: ${error.message}`);
       throw new InternalServerErrorException(
@@ -82,7 +85,7 @@ export class RegistrationSubmissionService {
   ): Promise<ResponsePayload> {
     try {
       await this.submissionRepo.update(id, data);
-      return generateResponse(true, 'Updated successfully!', { id, data });
+      return generateResponse(true, 'Updated successfully!');
     } catch (error) {
       this.logger.error(`Update error: ${error.message}`);
       throw new InternalServerErrorException(
@@ -95,7 +98,7 @@ export class RegistrationSubmissionService {
     try {
       await this.submissionRepo.delete(id);
       this.logger.log(`Deleted submission: ${id}`);
-      return generateResponse(true, 'Deleted successfully!', { id });
+      return generateResponse(true, 'Deleted successfully!');
     } catch (error) {
       this.logger.error(`Delete error: ${error.message}`);
       throw new InternalServerErrorException(

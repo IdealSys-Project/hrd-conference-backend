@@ -1,33 +1,56 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SponsorshipInquiry } from 'src/entity/sponsorship-inquiry.entity';
 import { Repository } from 'typeorm';
 import { CreateSponsorshipInquiryDto } from './sponsorship-inquiry.dto';
 import sendEmail from 'src/helper/send-email';
+import {
+  generateResponse,
+  ResponsePayload,
+} from 'src/helper/generate-response';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SponsorshipInquiryService {
+  private readonly logger = new Logger(SponsorshipInquiryService.name);
   constructor(
     @InjectRepository(SponsorshipInquiry)
-    private readonly sponsorshipInquiry: Repository<SponsorshipInquiry>,
+    private readonly sponsorshipInquiryRepo: Repository<SponsorshipInquiry>,
+    private readonly configService: ConfigService,
   ) {}
 
-  async createInquiry(
-    data: CreateSponsorshipInquiryDto,
-  ): Promise<{ status: boolean; message: string }> {
+  async create(data: CreateSponsorshipInquiryDto): Promise<ResponsePayload> {
     try {
-      await this.sponsorshipInquiry.save(data);
+      const existingSubmission = await this.sponsorshipInquiryRepo.count({
+        where: { email: data.email },
+      });
+
+      if (existingSubmission > 0) {
+        throw new InternalServerErrorException(
+          `Email ${data.email} is already registered.`,
+        );
+      }
+
+      await this.sponsorshipInquiryRepo.save(data);
+
+      const recipientEmail =
+        this.configService.get<string>('EMAIL_RECIPIENT') || 'default';
+
       await sendEmail({
-        to: 'hashimisharudin.work@gmail.com',
-        subject: 'TEST',
+        to: recipientEmail,
+        subject: 'Sponsorship Inquiry Submission',
         template: 'sponsorship-email',
         templateData: data,
       });
-      return {
-        status: true,
-        message:
-          'Your sponsorship inquiry has been successfully submitted and stored in our database.',
-      };
+
+      return generateResponse(
+        true,
+        'Your sponsorship inquiry has been successfully submitted and stored in our database.',
+      );
     } catch (error) {
       throw new InternalServerErrorException(
         `There was a problem storing your inquiry: ${error.message}`,
@@ -35,7 +58,19 @@ export class SponsorshipInquiryService {
     }
   }
 
-  async getAllInquiries(): Promise<SponsorshipInquiry[]> {
-    return await this.sponsorshipInquiry.find();
+  async getAll(): Promise<ResponsePayload> {
+    try {
+      const submissions = await this.sponsorshipInquiryRepo.find();
+      return generateResponse(
+        true,
+        'Fetched all sponsorship inquiry',
+        submissions,
+      );
+    } catch (error) {
+      this.logger.error(`Error fetching sponsorship inquiry: ${error.message}`);
+      throw new InternalServerErrorException(
+        `Error fetching sponsorship inquiry`,
+      );
+    }
   }
 }
