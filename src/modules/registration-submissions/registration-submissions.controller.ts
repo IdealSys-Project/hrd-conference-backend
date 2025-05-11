@@ -21,7 +21,7 @@ export class RegistrationSubmissionController {
   @ApiResponse({ status: 201, description: 'Submission successfully created' })
   @ApiResponse({ status: 400, description: 'Invalid request data' })
   async create(@Body() data: CreateRegistrationSubmissionDto) {
-    return this.service.createSubmission(data);
+    return this.service.create(data);
   }
 
   @Get()
@@ -29,7 +29,7 @@ export class RegistrationSubmissionController {
   @ApiSecurity('basic-auth')
   @ApiOperation({ summary: 'Retrieve all registration submissions' })
   @ApiResponse({ status: 200, description: 'List of registration submissions' })
-  async findAll() {
-    return this.service.getAllSubmissions();
+  async getAll() {
+    return this.service.getAll();
   }
 }
