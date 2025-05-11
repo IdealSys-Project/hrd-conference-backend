@@ -1,6 +1,10 @@
+version: '3.8'
+
 services:
   mysql:
+    container_name: mysql
     image: mysql:8
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
@@ -10,8 +14,14 @@ services:
       - mysql_data:/var/lib/mysql
     ports:
       - '3306:3306'
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
+    container_name: hrd_conference_backend
     build: .
     env_file:
       - .env
