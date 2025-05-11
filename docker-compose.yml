@@ -14,7 +14,7 @@ services:
   app:
     build: .
     env_file:
-      - .env.production
+      - .env
     ports:
       - '${PORT}:${PORT}'
     depends_on:
