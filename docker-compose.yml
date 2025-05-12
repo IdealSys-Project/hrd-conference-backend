@@ -26,7 +26,7 @@ services:
     env_file:
       - .env
     ports:
-      - '80:3000' # Changed from '${PORT}:${PORT}' to expose app on port 80
+      - '80:${PORT}' # Changed from '${PORT}:${PORT}' to expose app on port 80
     depends_on:
       - mysql
     restart: always
