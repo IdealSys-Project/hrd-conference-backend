@@ -23,24 +23,14 @@ services:
   app:
     container_name: hrd_conference_backend
     build: .
-    restart: always
     env_file:
       - .env
+    ports:
+      - '${PORT}:${PORT}'
     depends_on:
       - mysql
-    ports:
-      - '3000:3000' # Expose port 3000 for external access
-    environment:
-      - NODE_ENV=production # Ensure environment is set for production
+    restart: always
     command: npm run start:prod
-    volumes:
-      - .:/app # Optional, for mounting your code directly inside the container
-    networks:
-      - app_network
 
 volumes:
   mysql_data:
-
-networks:
-  app_network:
-    driver: bridge
