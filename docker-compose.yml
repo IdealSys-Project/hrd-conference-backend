@@ -1,36 +1,6 @@
 version: '3.8'
 
 services:
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
-    restart: always
-    ports:
-      - '80:80' # Only HTTP enabled
-      # - '443:443'  # HTTPS temporarily disabled
-    volumes:
-      - /etc/nginx/certs:/etc/nginx/certs:rw
-      - /etc/nginx/vhost.d:/etc/nginx/vhost.d
-      - /usr/share/nginx/html:/usr/share/nginx/html
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    labels:
-      - 'com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true'
-
-  # Let's Encrypt companion temporarily disabled
-  # letsencrypt:
-  #   image: jrcs/letsencrypt-nginx-proxy-companion
-  #   container_name: nginx-letsencrypt
-  #   restart: always
-  #   depends_on:
-  #     - nginx-proxy
-  #   environment:
-  #     - NGINX_PROXY_CONTAINER=nginx-proxy
-  #   volumes:
-  #     - /etc/nginx/certs:/etc/nginx/certs:rw
-  #     - /etc/nginx/vhost.d:/etc/nginx/vhost.d
-  #     - /usr/share/nginx/html:/usr/share/nginx/html
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-
   mysql:
     container_name: mysql
     image: mysql:8
@@ -58,12 +28,8 @@ services:
       - .env
     depends_on:
       - mysql
-    expose:
-      - '${PORT}'
-    environment:
-      - VIRTUAL_HOST=srv819239.hstgr.cloud
-    labels:
-      - 'VIRTUAL_HOST=srv819239.hstgr.cloud'
+    ports:
+      - '80:80' # Exposes app on HTTP
     command: npm run start:prod
 
 volumes:
