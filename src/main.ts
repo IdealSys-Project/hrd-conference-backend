@@ -21,8 +21,12 @@ async function bootstrap() {
   // Configure CORS dynamically based on environment variable
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
 
+  console.log('Allowed ORIGINS', allowedOrigins);
+
   app.enableCors({
     origin: (origin, callback) => {
+      console.log('Origin', origin);
+
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
