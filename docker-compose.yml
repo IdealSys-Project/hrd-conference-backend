@@ -6,8 +6,8 @@ services:
     container_name: nginx-proxy
     restart: always
     ports:
-      - '80:80'
-      - '443:443'
+      - '80:80' # Only HTTP enabled
+      # - '443:443'  # HTTPS temporarily disabled
     volumes:
       - /etc/nginx/certs:/etc/nginx/certs:rw
       - /etc/nginx/vhost.d:/etc/nginx/vhost.d
@@ -16,19 +16,20 @@ services:
     labels:
       - 'com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy=true'
 
-  letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    container_name: nginx-letsencrypt
-    restart: always
-    depends_on:
-      - nginx-proxy
-    environment:
-      - NGINX_PROXY_CONTAINER=nginx-proxy
-    volumes:
-      - /etc/nginx/certs:/etc/nginx/certs:rw
-      - /etc/nginx/vhost.d:/etc/nginx/vhost.d
-      - /usr/share/nginx/html:/usr/share/nginx/html
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+  # Let's Encrypt companion temporarily disabled
+  # letsencrypt:
+  #   image: jrcs/letsencrypt-nginx-proxy-companion
+  #   container_name: nginx-letsencrypt
+  #   restart: always
+  #   depends_on:
+  #     - nginx-proxy
+  #   environment:
+  #     - NGINX_PROXY_CONTAINER=nginx-proxy
+  #   volumes:
+  #     - /etc/nginx/certs:/etc/nginx/certs:rw
+  #     - /etc/nginx/vhost.d:/etc/nginx/vhost.d
+  #     - /usr/share/nginx/html:/usr/share/nginx/html
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
 
   mysql:
     container_name: mysql
@@ -58,15 +59,11 @@ services:
     depends_on:
       - mysql
     expose:
-      - '${PORT}' # Used by nginx-proxy internally
+      - '${PORT}'
     environment:
       - VIRTUAL_HOST=srv819239.hstgr.cloud
-      - LETSENCRYPT_HOST=srv819239.hstgr.cloud
-      - LETSENCRYPT_EMAIL=helmizaki1997@gmail.com
     labels:
       - 'VIRTUAL_HOST=srv819239.hstgr.cloud'
-      - 'LETSENCRYPT_HOST=srv819239.hstgr.cloud'
-      - 'LETSENCRYPT_EMAIL=helmizaki1997@gmail.com'
     command: npm run start:prod
 
 volumes:
