@@ -29,8 +29,18 @@ services:
     depends_on:
       - mysql
     ports:
-      - '80:80' # Exposes app on HTTP
+      - '3000:3000' # Expose port 3000 for external access
+    environment:
+      - NODE_ENV=production # Ensure environment is set for production
     command: npm run start:prod
+    volumes:
+      - .:/app # Optional, for mounting your code directly inside the container
+    networks:
+      - app_network
 
 volumes:
   mysql_data:
+
+networks:
+  app_network:
+    driver: bridge
