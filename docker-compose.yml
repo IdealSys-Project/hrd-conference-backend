@@ -31,6 +31,12 @@ services:
       - mysql
     restart: always
     command: npm run start:prod
+    networks:
+      - hrd-network
 
 volumes:
   mysql_data:
+
+networks:
+  hrd-network:
+    driver: bridge
