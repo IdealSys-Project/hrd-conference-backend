@@ -21,7 +21,7 @@ export class SpeakerInquiryController {
   @ApiResponse({ status: 201, description: 'Inquiry successfully created' })
   @ApiResponse({ status: 400, description: 'Invalid request data' })
   async create(@Body() data: CreateSpeakerInquiryDto) {
-    return this.service.createInquiry(data);
+    return this.service.create(data);
   }
 
   @Get()
@@ -30,6 +30,6 @@ export class SpeakerInquiryController {
   @ApiOperation({ summary: 'Retrieve all speaker inquiries' })
   @ApiResponse({ status: 200, description: 'List of speaker inquiries' })
   async findAll() {
-    return this.service.getAllInquiries();
+    return this.service.getAll();
   }
 }

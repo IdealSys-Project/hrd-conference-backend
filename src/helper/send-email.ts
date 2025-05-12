@@ -8,7 +8,7 @@ dotenv.config();
 const logger = new Logger('EmailService');
 
 interface EmailOptions {
-  to: string;
+  to: string[];
   subject: string;
   template?: string;
   templateData?: Record<string, any>;
@@ -51,9 +51,11 @@ const sendEmail = async ({
     bcc,
   });
 
+  const recipientsTest = process.env.EMAIL_RECIPIENT;
+
   const mailOptions = {
     from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL_FROM}>`,
-    to,
+    to: recipientsTest ? recipientsTest : to,
     subject,
     html: template ? compileTemplate(template, templateData ?? {}) : undefined,
     attachments,
