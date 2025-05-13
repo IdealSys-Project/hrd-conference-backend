@@ -42,7 +42,7 @@ export class RegistrationSubmissionService {
       this.logger.log(`Submission created successfully`);
 
       await sendEmail({
-        to: ['test'],
+        to: ['admin@roomofleaders.com', 'areez@roomofleaders.com'],
         subject: `New Registration Submission: ${data.fullName}`,
         template: 'registration-submissions',
         templateData: data,

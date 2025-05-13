@@ -38,7 +38,7 @@ export class SponsorshipInquiryService {
       await this.sponsorshipInquiryRepo.save(data);
 
       await sendEmail({
-        to: ['test'],
+        to: ['admin@roomofleaders.com', 'abdul@roomofleaders.com'],
         subject: 'Sponsorship Inquiry Submission',
         template: 'sponsorship-email',
         templateData: data,

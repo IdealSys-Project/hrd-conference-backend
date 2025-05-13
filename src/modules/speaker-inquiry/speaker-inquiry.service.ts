@@ -37,9 +37,8 @@ export class SpeakerInquiryService {
       }
 
       await this.speakerInquiryRepo.save(data);
-      ('default');
       await sendEmail({
-        to: ['test'],
+        to: ['admin@roomofleaders.com', 'adam@roomofleaders.com'],
         subject: 'Speaker Inquiry Submission',
         template: 'speaker-email',
         templateData: data,
