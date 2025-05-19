@@ -26,7 +26,7 @@ import { TerminusModule } from '@nestjs/terminus';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       entities: [SponsorshipInquiry, RegistrationSubmission, SpeakerInquiry],
-      synchronize: true,
+      synchronize: false,
       retryAttempts: 3,
       namingStrategy: new SnakecaseNamingStrategy(),
       logging: ['error'],
