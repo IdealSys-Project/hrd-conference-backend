@@ -14,9 +14,16 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.use(
-    '/swagger-custom.css',
+    '/api/swagger-custom.css',
     express.static(path.join(process.cwd(), 'src/config/swagger-custom.css')),
   );
+
+  app.use((req, res, next) => {
+    if (req.path === '/') {
+      return res.redirect('/api');
+    }
+    next();
+  });
 
   // Configure CORS dynamically based on environment variable
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
@@ -55,7 +62,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document, {
-    customCssUrl: '/swagger-custom.css',
+    customCssUrl: '/api/swagger-custom.css',
     swaggerOptions: {
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
       persistAuthorization: true,
