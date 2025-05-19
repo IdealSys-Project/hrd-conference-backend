@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as express from 'express';
 import * as path from 'path';
+import * as fs from 'fs';
 
 dotenv.config();
 
@@ -13,9 +14,17 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
+  const cssPath = path.join(process.cwd(), 'src/config/swagger-custom.css');
+
+  if (!fs.existsSync(cssPath)) {
+    console.error('Swagger CSS file not found at:', cssPath);
+  } else {
+    console.log('Serving swagger CSS from:', cssPath);
+  }
+
   app.use(
     '/api-docs/swagger-custom.css',
-    express.static(path.join(process.cwd(), 'src/config/swagger-custom.css')),
+    express.static(path.dirname(cssPath)),
   );
 
   app.use((req, res, next) => {
