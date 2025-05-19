@@ -15,7 +15,7 @@ async function bootstrap() {
 
   // Serve swagger-custom.css on /api-docs/swagger-custom.css URL
   app.use(
-    '/api-docs/swagger-custom.css',
+    '/swagger-custom.css',
     express.static(path.join(process.cwd(), 'src/config')),
   );
 
@@ -56,7 +56,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('api-docs', app, document, {
-    customCssUrl: '/api-docs/swagger-custom.css',
+    customCssUrl: '/swagger-custom.css',
     swaggerOptions: {
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
       persistAuthorization: true,
