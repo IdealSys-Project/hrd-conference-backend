@@ -14,7 +14,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.use(
-    '/api/swagger-custom.css',
+    '/api-docs/swagger-custom.css',
     express.static(path.join(process.cwd(), 'src/config/swagger-custom.css')),
   );
 
@@ -62,7 +62,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document, {
-    customCssUrl: '/api/swagger-custom.css',
+    customCssUrl: '/api-docs/swagger-custom.css',
     swaggerOptions: {
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
       persistAuthorization: true,
