@@ -23,6 +23,8 @@ async function bootstrap() {
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
   console.log('Allowed ORIGINS', allowedOrigins);
 
+  app.setGlobalPrefix('api');
+
   app.enableCors({
     origin: (origin, callback) => {
       console.log('Origin', origin);
@@ -61,6 +63,7 @@ async function bootstrap() {
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
       persistAuthorization: true,
     },
+    useGlobalPrefix: true,
   });
 
   const port = process.env.PORT ?? 3000;
