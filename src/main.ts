@@ -19,14 +19,6 @@ async function bootstrap() {
     express.static(path.join(process.cwd(), 'src/config')),
   );
 
-  // Redirect root '/' to '/api'
-  app.use((req, res, next) => {
-    if (req.path === '/') {
-      return res.redirect('/api');
-    }
-    next();
-  });
-
   // CORS setup
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
   console.log('Allowed ORIGINS', allowedOrigins);
