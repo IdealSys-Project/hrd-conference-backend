@@ -8,7 +8,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class AppController {
   constructor(private readonly service: AppService) {}
 
-  @Get('/api/health')
+  @Get('/health')
   @HealthCheck()
   @ApiOperation({ summary: 'Check API & Database health status' })
   @ApiResponse({ status: 200, description: 'Health check successful' })
