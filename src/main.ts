@@ -5,7 +5,6 @@ import * as dotenv from 'dotenv';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as express from 'express';
 import * as path from 'path';
-import * as fs from 'fs';
 
 dotenv.config();
 
@@ -14,19 +13,13 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  const cssPath = path.join(process.cwd(), 'src/config/swagger-custom.css');
-
-  if (!fs.existsSync(cssPath)) {
-    console.error('Swagger CSS file not found at:', cssPath);
-  } else {
-    console.log('Serving swagger CSS from:', cssPath);
-  }
-
+  // Serve swagger-custom.css on /api-docs/swagger-custom.css URL
   app.use(
     '/api-docs/swagger-custom.css',
-    express.static(path.dirname(cssPath)),
+    express.static(path.join(process.cwd(), 'src/config')),
   );
 
+  // Redirect root '/' to '/api'
   app.use((req, res, next) => {
     if (req.path === '/') {
       return res.redirect('/api');
@@ -34,15 +27,13 @@ async function bootstrap() {
     next();
   });
 
-  // Configure CORS dynamically based on environment variable
+  // CORS setup
   const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
-
   console.log('Allowed ORIGINS', allowedOrigins);
 
   app.enableCors({
     origin: (origin, callback) => {
       console.log('Origin', origin);
-
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -54,6 +45,7 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // Swagger config
   const config = new DocumentBuilder()
     .setTitle('API Documentation')
     .setDescription('This is the API documentation for the projects')
@@ -70,6 +62,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
+
   SwaggerModule.setup('api-docs', app, document, {
     customCssUrl: '/api-docs/swagger-custom.css',
     swaggerOptions: {
