@@ -7,9 +7,9 @@ export interface ResponsePayload {
 export const generateResponse = (
   status: boolean,
   message: string,
-  data: any = null,
+  data?: any,
 ): ResponsePayload => ({
   status,
   message,
-  data,
+  ...(data !== null && data !== undefined && { data }),
 });

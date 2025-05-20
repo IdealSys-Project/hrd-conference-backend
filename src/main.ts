@@ -56,9 +56,9 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  document.servers = [{ url: '/api' }];
+  document.servers = [{ url: '/internal-api' }];
 
-  SwaggerModule.setup('api-docs', app, document, {
+  SwaggerModule.setup('docs', app, document, {
     customCssUrl: '/swagger-custom.css',
     swaggerOptions: {
       supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
