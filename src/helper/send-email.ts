@@ -48,21 +48,24 @@ const sendEmail = async ({
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
-    bcc,
   });
 
-  const recipientsTest = process.env.EMAIL_RECIPIENT;
+  const testRecipient = process.env.EMAIL_RECIPIENT
+    ? process.env.EMAIL_RECIPIENT.split(',').map((email) => email.trim())
+    : [];
+  const sendToTestEmail = process.env.SEND_TO_TEST_EMAIL === 'true';
 
   const mailOptions = {
     from: `"${process.env.EMAIL_FROM_NAME}" <${process.env.EMAIL_FROM}>`,
-    to: recipientsTest ? recipientsTest : to,
+    to: sendToTestEmail ? testRecipient : to,
     subject,
     html: template ? compileTemplate(template, templateData ?? {}) : undefined,
     attachments,
+    bcc,
   };
 
   try {
-    logger.log(`Sending email to: ${to}, Subject: ${subject}`);
+    logger.log(`Sending email to: ${mailOptions.to}, Subject: ${subject}`);
     const info = await transporter.sendMail(mailOptions);
     logger.log(`Email sent successfully: ${info.response}`);
   } catch (error) {
