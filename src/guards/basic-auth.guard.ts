@@ -11,6 +11,8 @@ export class BasicAuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const authHeader = request.headers['authorization'];
 
+    console.log('AUTH HEADER', authHeader);
+
     if (!authHeader || !authHeader.startsWith('Basic ')) {
       throw new UnauthorizedException('Missing Basic Authentication header.');
     }
