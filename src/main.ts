@@ -56,7 +56,6 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  document.servers = [{ url: '/internal-api' }];
 
   SwaggerModule.setup('docs', app, document, {
     customCssUrl: '/swagger-custom.css',
