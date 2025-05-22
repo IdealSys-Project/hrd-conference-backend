@@ -20,21 +20,10 @@ export class SponsorshipInquiryService {
   constructor(
     @InjectRepository(SponsorshipInquiry)
     private readonly sponsorshipInquiryRepo: Repository<SponsorshipInquiry>,
-    private readonly configService: ConfigService,
   ) {}
 
   async create(data: CreateSponsorshipInquiryDto): Promise<ResponsePayload> {
     try {
-      const existingSubmission = await this.sponsorshipInquiryRepo.count({
-        where: { email: data.email },
-      });
-
-      if (existingSubmission > 0) {
-        throw new InternalServerErrorException(
-          `Email ${data.email} is already registered.`,
-        );
-      }
-
       await this.sponsorshipInquiryRepo.save(data);
 
       await sendEmail({
@@ -43,6 +32,7 @@ export class SponsorshipInquiryService {
         template: 'sponsorship-email',
         templateData: data,
       });
+      this.logger.log(`Sponsosrhip inquiry created successfully`);
 
       return generateResponse(
         true,

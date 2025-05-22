@@ -21,32 +21,19 @@ export class RegistrationSubmissionService {
   constructor(
     @InjectRepository(RegistrationSubmission)
     private readonly submissionRepo: Repository<RegistrationSubmission>,
-    private readonly configService: ConfigService,
   ) {}
 
   async create(
     data: CreateRegistrationSubmissionDto,
   ): Promise<ResponsePayload> {
     try {
-      const existingSubmission = await this.submissionRepo.count({
-        where: { email: data.email },
-      });
-
-      if (existingSubmission > 0) {
-        throw new InternalServerErrorException(
-          `Email ${data.email} is already registered.`,
-        );
-      }
-
-      const newSubmission = await this.submissionRepo.save(data);
-      this.logger.log(`Submission created successfully`);
-
       await sendEmail({
         to: ['admin@roomofleaders.com', 'areez@roomofleaders.com'],
         subject: `New Registration Submission: ${data.fullName}`,
         template: 'registration-submissions',
         templateData: data,
       });
+      this.logger.log(`Submission created successfully`);
 
       return generateResponse(
         true,

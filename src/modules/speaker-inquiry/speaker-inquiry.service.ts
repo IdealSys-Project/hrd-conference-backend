@@ -21,21 +21,10 @@ export class SpeakerInquiryService {
   constructor(
     @InjectRepository(SpeakerInquiry)
     private readonly speakerInquiryRepo: Repository<SpeakerInquiry>,
-    private readonly configService: ConfigService,
   ) {}
 
   async create(data: CreateSpeakerInquiryDto): Promise<ResponsePayload> {
     try {
-      const existingSubmission = await this.speakerInquiryRepo.count({
-        where: { email: data.email },
-      });
-
-      if (existingSubmission > 0) {
-        throw new InternalServerErrorException(
-          `Email ${data.email} is already registered.`,
-        );
-      }
-
       await this.speakerInquiryRepo.save(data);
       await sendEmail({
         to: ['admin@roomofleaders.com', 'adam@roomofleaders.com'],
