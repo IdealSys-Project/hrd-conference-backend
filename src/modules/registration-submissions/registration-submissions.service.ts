@@ -27,6 +27,7 @@ export class RegistrationSubmissionService {
     data: CreateRegistrationSubmissionDto,
   ): Promise<ResponsePayload> {
     try {
+      await this.submissionRepo.save(data);
       await sendEmail({
         to: ['admin@roomofleaders.com', 'areez@roomofleaders.com'],
         subject: `New Registration Submission: ${data.fullName}`,
